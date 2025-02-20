@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RPN
 {
@@ -19,26 +20,31 @@ namespace RPN
             // Read and Parse Expression here... 
             try
             {
-                
-                ArrayStack<int> intStack = new ArrayStack<int>(5);
-                intStack.Push(10);
-                intStack.Push(20);
-                intStack.Push(30);
+                string input = Txt_Input.Text.Trim();
 
-                string message = "Testing ArrayStack<T>\n";
-                message += $"Peek: {intStack.Peek()}\n"; 
-                message += $"Pop: {intStack.Pop()}\n";  
-                message += $"Pop: {intStack.Pop()}\n";  
-                message += $"Is Empty: {intStack.IsEmpty()}\n"; 
-                message += $"Pop: {intStack.Pop()}\n";  
-                message += $"Is Empty: {intStack.IsEmpty()}\n"; 
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    MessageBox.Show("Please enter a valid RPN expression.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
+                // Ensure input has at least one space (to separate numbers/operators)
+                if (!input.Contains(" "))
+                {
+                    MessageBox.Show("Invalid input format! Make sure to put spaces between numbers and operators.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                MessageBox.Show(message, "Test Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Create the calculator with ArrayStack
+                PolishNotationCalculator calculator = new PolishNotationCalculator(new ArrayStack<double>());
+                double result = calculator.Evaluate(input);
+
+                // Show result
+                MessageBox.Show($"Result: {result}", "RPN Calculator", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Stack Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Calculation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
