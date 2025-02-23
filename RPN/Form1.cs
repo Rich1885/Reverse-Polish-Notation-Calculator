@@ -17,7 +17,6 @@ namespace RPN
 
         private void Btn_Eval_Click(object sender, EventArgs e)
         {
-            // Read and Parse Expression here... 
             try
             {
                 string input = Txt_Input.Text.Trim();
@@ -28,18 +27,15 @@ namespace RPN
                     return;
                 }
 
-                // Ensure input has at least one space (to separate numbers/operators)
                 if (!input.Contains(" "))
                 {
                     MessageBox.Show("Invalid input format! Make sure to put spaces between numbers and operators.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Create the calculator with ArrayStack
-                PolishNotationCalculator calculator = new PolishNotationCalculator(new ArrayStack<double>());
+                PolishNotationCalculator calculator = new PolishNotationCalculator(new LinkedListStack<double>());
                 double result = calculator.Evaluate(input);
 
-                // Show result
                 MessageBox.Show($"Result: {result}", "RPN Calculator", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
