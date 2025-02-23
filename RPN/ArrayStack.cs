@@ -21,16 +21,25 @@ namespace RPN
 
         public void Push(T item)
         {
+            if (_top + 1 >= _capacity)
+                throw new StackOverflowException("Error: Stack overflow! Cannot push more items.");
+
             _items[++_top] = item;
         }
 
         public T Pop()
         {
+            if (IsEmpty())
+                throw new InvalidOperationException("Error: Stack underflow! Cannot pop from an empty stack.");
+
             return _items[_top--];
         }
 
         public T Peek()
         {
+            if (IsEmpty())
+                throw new InvalidOperationException("Error: Stack is empty! Nothing to peek.");
+
             return _items[_top];
         }
 

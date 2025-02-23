@@ -36,6 +36,9 @@ namespace RPN
 
         public T Pop()
         {
+            if (IsEmpty())
+                throw new InvalidOperationException("Error: Stack underflow! Cannot pop from an empty stack.");
+
             T data = _top.Data;
             _top = _top.Next;
             return data;
@@ -43,6 +46,9 @@ namespace RPN
 
         public T Peek()
         {
+            if (IsEmpty())
+                throw new InvalidOperationException("Error: Stack is empty! Nothing to peek.");
+
             return _top.Data;
         }
         public bool IsEmpty()
